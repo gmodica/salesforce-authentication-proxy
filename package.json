@@ -1,0 +1,29 @@
+{
+  "name": "salesforce-authentication-proxy",
+  "version": "1.0.0",
+  "description": "Proxy to get a Salesforce authentication token",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gmodica/salesforce-authentication-proxy.git"
+  },
+  "keywords": [
+    "salesforce",
+    "authentication"
+  ],
+  "author": "Giovanni Modica",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gmodica/salesforce-authentication-proxy/issues"
+  },
+  "homepage": "https://github.com/gmodica/salesforce-authentication-proxy#readme",
+  "dependencies": {
+    "dotenv": "^8.5.1",
+    "express": "^4.17.1",
+    "nforce": "^1.12.2",
+    "node-cache": "^5.1.2"
+  }
+}
