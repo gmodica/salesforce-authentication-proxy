@@ -1,7 +1,10 @@
 var salesforce = require('../../salesforce');
 
 exports.getToken = async function(req, res) {
-	const accessToken = salesforce.salesforceAuthentication()
+	let refresh = req.query.refresh;
+	refresh = refresh == "true" ? true : false;
+
+	const accessToken = salesforce.salesforceAuthentication(refresh)
 		.then(accessToken => {
 			res.json({
 				access_token: accessToken

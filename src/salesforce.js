@@ -2,14 +2,16 @@ var nforce = require('nforce');
 const NodeCache = require( "node-cache" );
 const cache = new NodeCache();
 
-exports.salesforceAuthentication = function() {
+exports.salesforceAuthentication = function(refresh) {
 	return new Promise((resolve, reject) => {
 		try {
-			let accessToken = cache.get("access_token");
-			if(accessToken) {
-				console.log('Retrieving token from cache: ' + accessToken);
-				resolve(accessToken);
-				return;
+			if(!refresh) {
+				let accessToken = cache.get("access_token");
+				if(accessToken) {
+					console.log('Retrieving token from cache: ' + accessToken);
+					resolve(accessToken);
+					return;
+				}
 			}
 
 			var org = nforce.createConnection({
