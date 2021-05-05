@@ -22,6 +22,7 @@ exports.salesforceAuthentication = function(refresh) {
 				mode: 'single' // optional, 'single' or 'multi' user mode, multi default
 			});
 
+			console.log('Retrieving salesforce token for username ' + process.env.SALESFORCE_USERNAME);
 			org.authenticate({ username: process.env.SALESFORCE_USERNAME, password: process.env.SALESFORCE_PASSWORD + process.env.SALESFORCE_TOKEN},
 				function(err, resp) {
 					if(err) {
@@ -30,7 +31,7 @@ exports.salesforceAuthentication = function(refresh) {
 					}
 					else {
 						accessToken = org.oauth.access_token;
-						console.log('Retrieving token from salesforce: ' + accessToken);
+						console.log('Retrieved token from salesforce: ' + accessToken);
 						cache.set("access_token", accessToken, process.env.CACHE_TTL_SECONDS);
 						resolve(accessToken);
 					}
