@@ -1,7 +1,7 @@
 const NodeCache = require( "node-cache" );
 const cache = new NodeCache();
 
-var statistics = require('../../statistics');
+const statistics = require('../../statistics');
 
 exports.getStatistics = async function(req, res) {
 	try {

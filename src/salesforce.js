@@ -2,7 +2,8 @@ var nforce = require('nforce');
 const NodeCache = require( "node-cache" );
 const cache = new NodeCache();
 
-var statistics = require('./statistics');
+const statistics = require('./statistics');
+const { performance } = require('perf_hooks');
 
 exports.salesforceAuthentication = function(refresh) {
 	return new Promise((resolve, reject) => {
