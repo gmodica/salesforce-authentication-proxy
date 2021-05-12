@@ -5,9 +5,10 @@ exports.getToken = async function(req, res) {
 	refresh = refresh == "true" ? true : false;
 
 	const accessToken = salesforce.salesforceAuthentication(refresh)
-		.then(accessToken => {
+		.then(tokenInfo => {
 			res.json({
-				access_token: accessToken
+				access_token: tokenInfo.accessToken,
+				instance_url: tokenInfo.instanceUrl
 			});
 
 			res.status(200).end();

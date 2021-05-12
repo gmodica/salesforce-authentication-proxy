@@ -17,9 +17,10 @@ exports.salesforceAuthentication = function(refresh) {
 
 			if(!refresh) {
 				let accessToken = cache.get("access_token");
-				if(accessToken) {
+				let instanceUrl = cache.get("instance_url");
+				if(accessToken && instanceUrl) {
 					console.log('Retrieving token from cache: ' + accessToken);
-					resolve(accessToken);
+					resolve({accessToken, instanceUrl});
 
 					stats.cacheHits += 1;
 					let totalTime = performance.now() - start;
@@ -49,9 +50,11 @@ exports.salesforceAuthentication = function(refresh) {
 					}
 					else {
 						accessToken = org.oauth.access_token;
+						instanceUrl = org.oauth.instance_url;
 						console.log('Retrieved token from salesforce: ' + accessToken);
 						cache.set("access_token", accessToken, process.env.CACHE_TTL_SECONDS);
-						resolve(accessToken);
+						cache.set("instance_url", instanceUrl);
+						resolve({accessToken,instanceUrl});
 					}
 
 					stats.salesforceCalls += 1;
