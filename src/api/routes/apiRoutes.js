@@ -2,15 +2,15 @@
 
 module.exports = function(app) {
 	var tokenController = require('../controllers/tokenControllers');
-	var statsController = require('../controllers/statsControllers');
+	var tokenStatisticsController = require('../controllers/tokenStatisticsControllers');
 
 	// account routes
 	app.route('/api/salesforce/token')
 		.get(tokenController.getToken);
 
 	// stats routes
-	app.route('/api/statistics')
-		.get(statsController.getStatistics);
-	app.route('/api/statistics/reset')
-		.get(statsController.resetStatistics);
+	app.route('/api/salesforce/token/statistics')
+		.get(tokenStatisticsController.getStatistics);
+	app.route('/api/salesforce/token/statistics/reset')
+		.get(tokenStatisticsController.resetStatistics);
 };
