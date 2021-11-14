@@ -20,20 +20,51 @@ This is a nodejs application which can be installed in Heroku or any other cloud
 
 | Environment Variable | Category | Description | Default |
 | -------------------- |:-----------:|:-----------:| -------:|
-| **SALESFORCE_ENVIRONMENT**      | Salesforce Org                      | Whether is a *sandbox* or *production* | production |
-| **SALESFORCE_CLIENT_ID**        | OAuth                               | The Connected App consumer key. See (1) in the image below |  |
-| **SALESFORCE_CLIENT_SECRET**    | OAuth                               | The Connected App cusomer secrect. See (2) in the image below  |  |
-| **SALESFORCE_CALLBACK_URL**     | OAuth                               | The Connected App callback URL. See (3) in the image below  |  |
-| **SALESFORCE_USERNAME**         | Salesforce User                     | The salesforce username  |  |
-| **SALESFORCE_PASSWORD**         | Salesforce User                     | The salesforce user's password  |  |
-| **SALESFORCE_TOKEN**            | Salesforce User                     | The salesforce user's security token  |  |
-| **SECURITY_API_KEY**            | App Security (Header)               | The API key that needs to be sent as part of the request in the header. See details below  |  |
-| **SECURITY_USERNAME**           | App Security (Basic Authentication) | The username used to verify the Basic Authentication security schema |  |
-| **SECURITY_PASSWORD**           | App Security (Basic Authentication) | The password used to verify the Basic Authentication security schema  |  |
-| **SECURITY_REALM**              | App Security (Basic Authentication) | The realm used to verify the Basic Authentication security schema  |  |
-| **CACHE_TTL_SECONDS**           | Cache                               | The Time To Live (TTL) of the token in the cache | 60 |
+| **SALESFORCE_AUTHENTICATION_MODE** | Salesforce Authentication               | Whether is *jwt* or *password* | password |
+| **SALESFORCE_USERNAME**            | OAuth (Username/Password flows)         | The salesforce username  |  |
+| **SALESFORCE_CLIENT_ID**           | OAuth (JWT and Username/Password flows) | The Connected App consumer key. See (1) in the image below |  |
+| **SALESFORCE_CLIENT_SECRET**       | OAuth (Username/Password flows)         | The Connected App cusomer secrect. See (2) in the image below  |  |
+| **SALESFORCE_ENVIRONMENT**         | OAuth (Username/Password flows)         | Whether is a *sandbox* or *production* | production |
+| **SALESFORCE_CALLBACK_URL**        | OAuth (Username/Password flows)         | The Connected App callback URL. See (3) in the image below  |  |
+| **SALESFORCE_PASSWORD**            | OAuth (Username/Password flows)         | The salesforce user's password  |  |
+| **SALESFORCE_TOKEN**               | OAuth (Username/Password flows)         | The salesforce user's security token  |  |
+| **SALESFORCE_AUDIENCE**            | OAuth (JWT Flow)                        | The login URL (e.g. https://login.salesforce.com). This is used to specify the audience when using the JWT authentication flow | |
+| **SALESFORCE_JWT_PRIVATE_KEY**     | OAuth (JWT Flow)                        | The private key. This is used for the JWT authentication flow. The private key must match the certificate used to configure the connected app in Salesforce. See details below |  |
+| **SECURITY_API_KEY**               | App Security (Header)                   | The API key that needs to be sent as part of the request in the header. See details below  |  |
+| **SECURITY_USERNAME**              | App Security (Basic Authentication)     | The username used to verify the Basic Authentication security schema |  |
+| **SECURITY_PASSWORD**              | App Security (Basic Authentication)     | The password used to verify the Basic Authentication security schema  |  |
+| **SECURITY_REALM**                 | App Security (Basic Authentication)     | The realm used to verify the Basic Authentication security schema  |  |
+| **CACHE_TTL_SECONDS**              | Cache                                   | The Time To Live (TTL) of the token in the cache | 60 |
+
+For Salesforce Authentication, it is possible to either use the JWT flow (recommended), or the Username/Password flow.
+
+### JWT Authentication
+To use JWT authentication, it is required to configure the following settings:
+
+| Environment Variable | Value | Description |
+| -------------------- |:-----------:|:-----------:|
+| **SALESFORCE_AUTHENTICATION_MODE** | jwt |  |
+| **SALESFORCE_USERNAME**            | gmodica@modicatech.com | The username of the user which is going to request the token |
+| **SALESFORCE_CLIENT_ID**           | .... | See (1) in the image below |
+| **SALESFORCE_AUDIENCE**            | https://login.salesforce.com | Use https://test.salesforce.com or a custom domain if needed |
+| **SALESFORCE_JWT_PRIVATE_KEY**     | -----BEGIN RSA PRIVATE KEY-----<br>.....<br>-----END RSA PRIVATE KEY----- | See this [article](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_auth_key_and_cert.htm). The RSA key is the one obtained in step 3 |
+
+### Username/Password Authentication
+To use Username/Password authentication, it is required to configure the following settings:
+
+| Environment Variable | Value | Description |
+| -------------------- |:-----------:|:-----------:|
+| **SALESFORCE_AUTHENTICATION_MODE** | password |  |
+| **SALESFORCE_USERNAME**            | gmodica@modicatech.com | The username of the user which is going to request the token |
+| **SALESFORCE_ENVIRONMENT**         | production | Use *sandbox* if connecting to a sandbox |
+| **SALESFORCE_CLIENT_ID**           | .... | See (1) in the image below |
+| **SALESFORCE_CLIENT_SECRET**       | .... | See (2) in the image below |
+| **SALESFORCE_PASSWORD**            | .... | The password for the username |
+| **SALESFORCE_TOKEN**               | .... | The security token for the username |
+| **SALESFORCE_CALLBACK_URL**        | .... | See (3) in the image below |
 
 ![Connected App OAuth Settings](./docs/images/connectedAppSettings.png "Connected App OAuth Settings")
+
 
 ---
 ## Service Endpoints
